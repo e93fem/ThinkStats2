@@ -19,8 +19,20 @@ def main(script):
 
     script: string script name
     """
+    df = ReadFemPreg()
+
+    print(df["pregnum"].value_counts().sort_index())
+
+    assert(len(df) == 7643)
+    assert(df.pregnum.value_counts()[1] == 1267)
+
     print('%s: All tests passed.' % script)
 
+
+def ReadFemPreg(dct_file='2002FemResp.dct',dat_file='2002FemResp.dat.gz'):
+    dct = thinkstats2.ReadStataDct(dct_file)
+    df = dct.ReadFixedWidth(dat_file, compression='gzip')
+    return df
 
 if __name__ == '__main__':
     main(*sys.argv)
